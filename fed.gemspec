@@ -53,9 +53,17 @@ Gem::Specification.new do |s|
   # = MANIFEST =
   s.files = %w[
     LICENSE
-    fed.gemspec
     README.md
     Rakefile
+    fed-0.0.gem
+    fed.gemspec
+    lib/fed.rb
+    lib/fed/feed/atom.rb
+    lib/fed/feed/base.rb
+    lib/fed/feed/entry.rb
+    lib/fed/feed/rss.rb
+    lib/fed/http.rb
+    lib/fed/http/curb.rb
   ]
   # = MANIFEST =
 
