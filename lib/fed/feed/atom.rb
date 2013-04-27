@@ -24,7 +24,16 @@ module Fed
             ""
           end
 
-          Entry.new(entry_title, entry_link, entry_guid, entry_published, entry_author, entry_summary, entry_content)
+          enclosure_elem = item.css("link[rel='enclosure']").first
+          entry_enclosure = if !enclosure_elem.nil?
+            url = enclosure_elem.attributes['href'] ? enclosure_elem.attributes['href'].value : ''
+            content_type = enclosure_elem.attributes['type'] ? enclosure_elem.attributes['type'].value : ''
+            Enclosure.new(url, content_type)
+          else
+            nil
+          end
+
+          Entry.new(entry_title, entry_link, entry_guid, entry_published, entry_author, entry_summary, entry_content, entry_enclosure)
         end
 
         self

@@ -8,7 +8,8 @@ require 'fed/http'
 require 'fed/http/curb'
 require 'fed/feed/base'
 require 'fed/feed/atom'
-require 'fed/feed/rss'
+require 'fed/feed/rss1'
+require 'fed/feed/rss2'
 require 'fed/feed/entry'
 
 module Fed
@@ -32,8 +33,10 @@ module Fed
     def parser_for(doc)
       if is_atom?(doc)
         Fed::Feed::Atom.new(doc)
-      elsif is_rss?(doc)
-        Fed::Feed::Rss.new(doc)
+      elsif is_rss1?(doc)
+        Fed::Feed::Rss1.new(doc)
+      elsif is_rss2?(doc)
+        Fed::Feed::Rss2.new(doc)
       elsif (new_url = find_link_in_html(doc))
         parser_for(fetch(new_url))
       else
@@ -45,7 +48,11 @@ module Fed
       document.css('feed entry').any?
     end
 
-    def is_rss?(document)
+    def is_rss1?(document)
+      document.xpath('/rdf:RDF').any?
+    end
+
+    def is_rss2?(document)
       document.css('rss channel').any?
     end
 
