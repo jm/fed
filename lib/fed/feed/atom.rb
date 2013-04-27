@@ -24,7 +24,7 @@ module Fed
             ""
           end
 
-          enclosure_elem = item.css("link[rel='enclosure']").first
+          enclosure_elem = entry.css("link[rel='enclosure']").first
           entry_enclosure = if !enclosure_elem.nil?
             url = enclosure_elem.attributes['href'] ? enclosure_elem.attributes['href'].value : ''
             content_type = enclosure_elem.attributes['type'] ? enclosure_elem.attributes['type'].value : ''

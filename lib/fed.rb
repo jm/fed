@@ -14,7 +14,7 @@ require 'fed/feed/rss2'
 require 'fed/feed/entry'
 
 module Fed
-  VERSION = '0.0.3'
+  VERSION = '0.0.5'
 
   class <<self
 
