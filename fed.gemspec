@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   ## If your rubyforge_project name is different, then edit it and comment out
   ## the sub! line in the Rakefile
   s.name              = 'fed'
-  s.version           = '0.0.2'
+  s.version           = '0.0.3'
   s.date              = '2013-04-26'
 
   ## Make sure your summary is short. The description may be as long
@@ -59,8 +59,10 @@ Gem::Specification.new do |s|
     lib/fed.rb
     lib/fed/feed/atom.rb
     lib/fed/feed/base.rb
+    lib/fed/feed/enclosure.rb
     lib/fed/feed/entry.rb
-    lib/fed/feed/rss.rb
+    lib/fed/feed/rss1.rb
+    lib/fed/feed/rss2.rb
     lib/fed/http.rb
     lib/fed/http/curb.rb
   ]
