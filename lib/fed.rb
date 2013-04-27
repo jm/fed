@@ -5,6 +5,7 @@ require 'nokogiri'
 require 'time'
 
 require 'fed/http'
+require 'fed/http/errors'
 require 'fed/http/curb'
 require 'fed/feed/base'
 require 'fed/feed/atom'
@@ -22,7 +23,12 @@ module Fed
     end
 
     def fetch(feed_url)
-      Fed::Http.client.get(feed_url)
+      response = Fed::Http.client.get(feed_url)
+      
+      raise Fed::Http::Errors::NotFound if response == 404
+      raise Fed::Http::Errors::ServerError unless response.is_a?(String)
+
+      response
     end
 
     def parse(xml)
@@ -33,14 +39,14 @@ module Fed
     def parser_for(doc)
       if is_atom?(doc)
         Fed::Feed::Atom.new(doc)
-      elsif is_rss1?(doc)
-        Fed::Feed::Rss1.new(doc)
       elsif is_rss2?(doc)
         Fed::Feed::Rss2.new(doc)
+      elsif is_rss1?(doc)
+        Fed::Feed::Rss1.new(doc)
       elsif (new_url = find_link_in_html(doc))
         parser_for(fetch(new_url))
       else
-        raise "Bad feed."
+        raise Fed::Http::Errors::BadFeed  
       end
     end
 
@@ -49,7 +55,7 @@ module Fed
     end
 
     def is_rss1?(document)
-      document.xpath('/rdf:RDF').any?
+      document.xpath('/rdf:RDF').any? rescue false
     end
 
     def is_rss2?(document)
