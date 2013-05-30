@@ -12,6 +12,7 @@ require 'fed/feed/atom'
 require 'fed/feed/rss1'
 require 'fed/feed/rss2'
 require 'fed/feed/entry'
+require 'fed/feed/enclosure'
 
 module Fed
   VERSION = '0.0.5'
